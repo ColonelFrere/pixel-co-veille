@@ -1,0 +1,26 @@
+# Dépendances
+node_modules/
+
+# Build
+.next/
+.build/
+out/
+dist/
+build/
+
+# Environnement
+.env
+.env.*
+!.env.example
+
+# Système
+.DS_Store
+*.log
+.vscode/
+.idea/
+
+# Prisma
+prisma/migrations/
+
+# Cache
+*.tsbuildinfo

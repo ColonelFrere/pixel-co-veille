@@ -1,0 +1,78 @@
+generator client {
+    provider = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+    output = "/home/ubuntu/pixel-co-veille/nextjs_space/node_modules/.prisma/client"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Source {
+  id        String    @id @default(cuid())
+  name      String
+  url       String    @unique
+  categorie String
+  active    Boolean   @default(true)
+  lastError String?
+  createdAt DateTime  @default(now()) @map("created_at")
+  articles  Article[]
+
+  @@map("sources")
+}
+
+model Article {
+  id          String   @id @default(cuid())
+  sourceId    String   @map("source_id")
+  title       String
+  url         String   @unique
+  description String?
+  publishedAt DateTime? @map("published_at")
+  score       Int?
+  categorie   String?
+  isSurprise  Boolean  @default(false) @map("is_surprise")
+  scored      Boolean  @default(false)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  source Source @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@index([sourceId])
+  @@index([createdAt])
+  @@index([scored])
+  @@map("articles")
+}
+
+model Digest {
+  id           String   @id @default(cuid())
+  date         DateTime @default(now())
+  content      Json
+  articleCount Int      @default(0) @map("article_count")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@index([date])
+  @@map("digests")
+}
+
+model Log {
+  id        String   @id @default(cuid())
+  type      String
+  message   String
+  metadata  Json?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([type])
+  @@index([createdAt])
+  @@map("logs")
+}
+
+model Profile {
+  id         String   @id @default(cuid())
+  name       String
+  agency     String
+  stack      Json
+  priorities Json
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("profile")
+}
