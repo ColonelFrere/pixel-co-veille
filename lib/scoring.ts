@@ -42,12 +42,11 @@ export async function scoreWithGroq(title: string, description: string, stack: s
   const client = new Groq({ apiKey });
   const prompt = buildPrompt(title, description, stack, priorities);
   const completion = await client.chat.completions.create({
-    model: 'openai/gpt-oss-120b',
+    model: 'llama-3.3-70b-versatile',
     messages: [{ role: 'user', content: prompt }],
     temperature: 0.3,
-    max_completion_tokens: 1024,
-    reasoning_effort: 'low',
-  } as any);
+    max_tokens: 256,
+  });
   const text = (completion as any)?.choices?.[0]?.message?.content ?? '';
   return parseAIResponse(text);
 }
