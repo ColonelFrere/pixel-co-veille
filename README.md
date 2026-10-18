@@ -68,6 +68,28 @@ Les clés API ne sont **jamais** écrites en dur dans le code. Elles sont stock�
 | `GROQ_API_KEY` | Clé API Groq (moteur principal) | [console.groq.com/keys](https://console.groq.com/keys) |
 | `GEMINI_API_KEY` | Clé API Google Gemini (fallback) | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) |
 | `DATABASE_URL` | URL de connexion PostgreSQL | Fournie par la plateforme d'hébergement |
+| `NEXTAUTH_URL` | URL publique du site | `http://localhost:3000` en local |
+
+Un modèle est fourni : copiez `.env.example` en `.env` puis remplissez-le.
+
+### Installation locale
+
+```bash
+git clone https://github.com/ColonelFrere/pixel-co-veille.git
+cd pixel-co-veille
+cp .env.example .env      # puis remplir les valeurs
+npm install               # génère aussi le client Prisma
+npm run db:push           # crée les tables
+npm run db:seed           # ajoute les 6 sources et le profil
+npm run dev               # http://localhost:3000
+```
+
+### Mise en ligne (Vercel + Neon)
+
+1. Créez une base PostgreSQL gratuite sur [neon.tech](https://neon.tech) et copiez son URL de connexion.
+2. Sur [vercel.com](https://vercel.com), connectez-vous avec GitHub → **Add New → Project** → importez `pixel-co-veille`.
+3. Dans **Environment Variables**, ajoutez `DATABASE_URL`, `GROQ_API_KEY`, `GEMINI_API_KEY`.
+4. Cliquez **Deploy**. Depuis votre PC, créez les tables sur la base Neon : mettez son URL dans `DATABASE_URL` du `.env`, puis `npm run db:push && npm run db:seed`.
 
 ---
 

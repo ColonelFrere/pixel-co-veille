@@ -5,7 +5,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "prisma generate",
+    "db:push": "prisma db push",
+    "db:seed": "prisma db seed"
   },
   "prisma": {
     "seed": "tsx --require dotenv/config scripts/safe-seed.ts"
@@ -125,6 +128,10 @@
     "node": ">=20.9.0"
   },
   "resolutions": {
+    "motion-dom": "12.23.12",
+    "motion-utils": "12.23.6"
+  },
+  "overrides": {
     "motion-dom": "12.23.12",
     "motion-utils": "12.23.6"
   }

@@ -24,3 +24,5 @@ prisma/migrations/
 
 # Cache
 *.tsbuildinfo
+
+.yarn/
